@@ -1,0 +1,23 @@
+torch==2.1.2
+torchvision==0.16.2
+numpy==1.26.4
+opencv-python==4.9.0.80
+Pillow==10.2.0
+albumentations==1.4.0
+timm==0.9.16
+onnx==1.15.0
+onnxsim==0.4.35
+onnx2tf==1.22.3
+tensorflow==2.15.0
+tf-keras==2.15.0
+sng4onnx
+onnx-graphsurgeon
+# Data / eval
+pandas==2.2.0
+matplotlib==3.8.2
+tqdm==4.66.1
+editdistance==0.8.1
+# Synthetic text generation
+trdg==1.8.0
+# Logging
+tensorboard==2.15.1

@@ -1,0 +1,12 @@
+name: Model tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10' }
+      - run: pip install -r requirements.txt
+      - run: python -c "from models.corner_detector.model import CornerDetector; m=CornerDetector(pretrained=False); print(f'params: {m.count_params():.3f}M')"
+      - run: python -c "from models.doc_classifier.model import DocClassifier; m=DocClassifier(pretrained=False); print(f'params: {m.count_params():.3f}M')"

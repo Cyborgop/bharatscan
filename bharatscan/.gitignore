@@ -1,0 +1,60 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ── ML artifacts ──
+runs/
+wandb/
+lightning_logs/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+# Large TFLites (ship via git-lfs, but ignore any in build dirs)
+quantization/out/
+tflite_output/
+
+# ── Raw data — NEVER commit ──
+datasets/raw/
+datasets/collected/
+datasets/synth/out/
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.pdf
+**/*.tif
+**/*.tiff
+# allow a few docs
+!docs/**/*.png
+!docs/**/*.pdf
+!app/assets/**/*.png
+
+# ── Flutter ──
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/.pub-cache/
+app/.pub/
+app/build/
+app/android/.gradle/
+app/android/app/debug/
+app/android/app/profile/
+app/android/app/release/
+app/android/local.properties
+app/ios/Pods/
+app/ios/.symlinks/
+app/ios/Flutter/Flutter.framework
+app/ios/Flutter/Flutter.podspec
+
+# ── IDE ──
+.idea/
+.vscode/
+*.iml
+*.swp
+.DS_Store

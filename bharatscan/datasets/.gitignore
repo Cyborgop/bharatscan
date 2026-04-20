@@ -1,0 +1,17 @@
+# NEVER commit raw data
+raw/
+collected/
+calib/
+synth/out/
+
+*.jpg
+*.jpeg
+*.png
+*.pdf
+*.tif
+*.tiff
+*.bmp
+
+# allow manifests (CSVs of paths, no data)
+!manifests/**
+!**/*.csv

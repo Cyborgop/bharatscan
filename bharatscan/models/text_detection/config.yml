@@ -1,0 +1,28 @@
+# DBNet-MobileNetV3-large config for Indic text detection
+# Fine-tune from PaddlePaddle/PP-OCRv4_mobile_det
+
+base_checkpoint: PaddlePaddle/PP-OCRv4_mobile_det
+input_size: 640
+backbone: mobilenetv3_large
+neck: dbfpn
+head: dbhead
+
+training:
+  epochs: 100
+  batch_size: 16
+  optimizer: adamw
+  lr: 1e-4
+  warmup_epochs: 5
+  weight_decay: 1e-4
+
+data:
+  train_manifests:
+    - datasets/manifests/icdar_mlt_indic_train.csv
+    - datasets/manifests/bharat_str_train.csv
+    - datasets/manifests/synth_indic_train.csv
+  val_manifests:
+    - datasets/manifests/icdar_mlt_indic_val.csv
+
+# Paper references (included in attachments):
+#   - 1911.08947v2  — "Real-time Scene Text Detection with Differentiable Binarization"
+#   - 2207.06966v1  — DBNet++ improvements
