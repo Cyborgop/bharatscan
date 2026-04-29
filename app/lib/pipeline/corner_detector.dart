@@ -49,7 +49,7 @@ class CornerDetectorService extends TfliteBase {
       ),
     );
 
-    await runMany([input.reshape(inputShape)], {0: heatmaps});
+    await runMany([input], {0: heatmaps});
 
     // Argmax per channel
     final corners = <Corner>[];

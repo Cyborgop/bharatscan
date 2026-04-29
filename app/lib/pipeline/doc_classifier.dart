@@ -31,7 +31,7 @@ class DocClassifierService extends TfliteBase {
     // TODO: preprocessing identical to training transform
     final input = resized.getBytes(order: img.ChannelOrder.rgb);
     final logits = List.generate(1, (_) => List.filled(6, 0.0));
-    await runMany([input.reshape(inputShape)], {0: logits});
+    await runMany([input], {0: logits});
 
     var best = -1e9; var bestIdx = 0;
     for (var i = 0; i < 6; i++) {

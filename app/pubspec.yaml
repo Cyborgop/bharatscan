@@ -42,10 +42,10 @@ flutter:
 
   assets:
     - assets/models/corner_detector_int8.tflite
-    - assets/models/doc_classifier_int8.tflite
-    - assets/models/text_det_int8.tflite
-    - assets/models/text_rec_devanagari_int8.tflite
-    - assets/models/manifest.json
+    # - assets/models/doc_classifier_int8.tflite
+    # - assets/models/text_det_int8.tflite
+    # - assets/models/text_rec_devanagari_int8.tflite
+    # - assets/models/manifest.json
 
   fonts:
     - family: NotoDevanagari
