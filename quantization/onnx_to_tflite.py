@@ -77,8 +77,8 @@ def main() -> None:
     conv.optimizations = [tf.lite.Optimize.DEFAULT]
     conv.representative_dataset = representative_dataset_fn(args.calib_dir, args.img_size)
     conv.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
-    conv.inference_input_type = tf.uint8
-    conv.inference_output_type = tf.float32
+    conv.inference_input_type = tf.int8
+    conv.inference_output_type = tf.int8
     Path(f"{args.out_dir}/model_int8.tflite").write_bytes(conv.convert())
 
     for f in ["model_fp32.tflite", "model_fp16.tflite", "model_int8.tflite"]:

@@ -16,7 +16,9 @@ def main() -> None:
     p.add_argument("--out", required=True)
     args = p.parse_args()
 
-    model = DocClassifier(pretrained=False).eval()
+    model = DocClassifier(pretrained=False)
+    model.load_state_dict(torch.load(args.ckpt, map_location="cpu"))
+    model.eval()
     model.load_state_dict(torch.load(args.ckpt, map_location="cpu"))
 
     dummy = torch.randn(1, 3, 224, 224)
