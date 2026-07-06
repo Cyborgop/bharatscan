@@ -51,7 +51,8 @@ abstract class TfliteBase {
     }
 
     final inType = _interpreter!.getInputTensor(0).type.toString().toLowerCase();
-    _isQuantized = inType.contains('uint8');
+    _isQuantized =
+    inType.contains('int8') || inType.contains('uint8');
     debugPrint('[$assetName] quantized=$_isQuantized delegate=$_delegate');
 
     _isolateInterpreter = await IsolateInterpreter.create(address: _interpreter!.address);
