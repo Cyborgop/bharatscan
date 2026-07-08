@@ -40,51 +40,76 @@ class CornerDetectorService extends TfliteBase {
         width: _inputSize, height: _inputSize,
         interpolation: img.Interpolation.linear);
 
-    final input = _preprocess(resized);
+    final input = [_preprocess(resized)];
     final heatmaps = List.generate(
       1,
       (_) => List.generate(
         _heatSize,
-        (_) => List.generate(_heatSize, (_) => List.filled(4, 0.0)),
+        (_) => List.generate(_heatSize, (_) => List.filled(4, 0)),
       ),
     );
-
-    await runMany([input], {0: heatmaps});
+    print(input.runtimeType);
+    print(input);
+    await runMany(input, {0: heatmaps});
 
     // Argmax per channel
     final corners = <Corner>[];
     final scaleX = frame.width / _heatSize;
     final scaleY = frame.height / _heatSize;
     for (var c = 0; c < 4; c++) {
-      double best = -1;
+      int best = -128; // Minimum possible int8 value
       int bx = 0, by = 0;
+
       for (var y = 0; y < _heatSize; y++) {
         for (var x = 0; x < _heatSize; x++) {
-          final v = heatmaps[0][y][x][c] as double;
-          if (v > best) { best = v; bx = x; by = y; }
-        }
-      }
+          final int v = heatmaps[0][y][x][c] as int;
+
+    if (v > best) {
+      best = v;
+      bx = x;
+      by = y;
+    }
+  }
+}
       corners.add(Corner(bx * scaleX, by * scaleY));
     }
     return corners;
   }
 
-  Uint8List _preprocess(img.Image im) {
-    final bytes = im.getBytes(order: img.ChannelOrder.rgb);
-    final n = _inputSize * _inputSize;
-    if (isQuantized) {
-      final buf = Uint8List(n * 3);
-      for (var i = 0; i < n; i++) {
-        final j = i * 3;
-        final r = (bytes[j]     / 255.0 - _rm) / _rs;
-        final g = (bytes[j + 1] / 255.0 - _gm) / _gs;
-        final b = (bytes[j + 2] / 255.0 - _bm) / _bs;
-        buf[j]     = (r / _qScale + _qZero).round().clamp(0, 255);
-        buf[j + 1] = (g / _qScale + _qZero).round().clamp(0, 255);
-        buf[j + 2] = (b / _qScale + _qZero).round().clamp(0, 255);
-      }
-      return buf;
+  List<List<List<List<int>>>> _preprocess(img.Image im) {
+  final tensor = List.generate(
+    1,
+    (_) => List.generate(
+      _inputSize,
+      (_) => List.generate(
+        _inputSize,
+        (_) => List.filled(3, 0),
+      ),
+    ),
+  );
+
+  for (int y = 0; y < _inputSize; y++) {
+    for (int x = 0; x < _inputSize; x++) {
+      final p = im.getPixel(x, y);
+
+      final r = ((p.r / 255.0 - _rm) / _rs / _qScale + _qZero)
+          .round()
+          .clamp(-128, 127);
+
+      final g = ((p.g / 255.0 - _gm) / _gs / _qScale + _qZero)
+          .round()
+          .clamp(-128, 127);
+
+      final b = ((p.b / 255.0 - _bm) / _bs / _qScale + _qZero)
+          .round()
+          .clamp(-128, 127);
+
+      tensor[0][y][x][0] = r;
+      tensor[0][y][x][1] = g;
+      tensor[0][y][x][2] = b;
     }
-    throw UnimplementedError('FP32 input not wired yet');
   }
+
+  return tensor;
+}
 }

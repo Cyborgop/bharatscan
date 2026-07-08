@@ -54,7 +54,10 @@ abstract class TfliteBase {
     _isQuantized =
     inType.contains('int8') || inType.contains('uint8');
     debugPrint('[$assetName] quantized=$_isQuantized delegate=$_delegate');
-
+     print(_interpreter!.getInputTensor(0).type);
+      print(_interpreter!.getOutputTensor(0).type);
+      print(_interpreter!.getInputTensor(0).shape);
+      print(_interpreter!.getOutputTensor(0).shape);
     _isolateInterpreter = await IsolateInterpreter.create(address: _interpreter!.address);
 
     _ready = true;
@@ -65,6 +68,7 @@ abstract class TfliteBase {
       _warmupCount++;
     }
   }
+      
 
   Future<void> warmupOnce() async {
     // Subclasses should override with a real run. Default: no-op.
