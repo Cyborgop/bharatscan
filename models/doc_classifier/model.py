@@ -11,7 +11,7 @@ import torch.nn as nn
 import torchvision.models as models
 
 
-DOC_CLASSES = ["aadhaar", "pan", "cheque", "gst_invoice", "marksheet", "generic"]
+DOC_CLASSES = ["aadhaar", "pan"]
 
 
 class DocClassifier(nn.Module):

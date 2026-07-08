@@ -8,14 +8,14 @@ plugins {
 }
 
 android {
-    namespace "com.bharatscan.app"
-    compileSdk 34
+    namespace "com.bharatscan.bharatscan"
+    compileSdk 36
     ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        applicationId "com.bharatscan.app"
+        applicationId "com.bharatscan.bharatscan"
         minSdk 29           // Android 10, NNAPI ~stable
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "0.1.0"
     }
@@ -39,14 +39,14 @@ android {
     }
 
     // split APKs by ABI — reduces per-device download size
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'armeabi-v7a', 'arm64-v8a'
-            universalApk false
-        }
-    }
+    // splits {
+    //     abi {
+    //         enable true
+    //         reset()
+    //         include 'armeabi-v7a', 'arm64-v8a'
+    //         universalApk false
+    //     }
+    // }
 
     packagingOptions {
         jniLibs {

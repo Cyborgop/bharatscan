@@ -4,7 +4,6 @@
 
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
@@ -52,9 +51,13 @@ abstract class TfliteBase {
     }
 
     final inType = _interpreter!.getInputTensor(0).type.toString().toLowerCase();
-    _isQuantized = inType.contains('uint8');
+    _isQuantized =
+    inType.contains('int8') || inType.contains('uint8');
     debugPrint('[$assetName] quantized=$_isQuantized delegate=$_delegate');
-
+     print(_interpreter!.getInputTensor(0).type);
+      print(_interpreter!.getOutputTensor(0).type);
+      print(_interpreter!.getInputTensor(0).shape);
+      print(_interpreter!.getOutputTensor(0).shape);
     _isolateInterpreter = await IsolateInterpreter.create(address: _interpreter!.address);
 
     _ready = true;
@@ -65,6 +68,7 @@ abstract class TfliteBase {
       _warmupCount++;
     }
   }
+      
 
   Future<void> warmupOnce() async {
     // Subclasses should override with a real run. Default: no-op.
