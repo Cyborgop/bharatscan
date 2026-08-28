@@ -86,5 +86,5 @@ See `LICENSE`.
 
 ## Author
 
-Subhadeep Mondal, M.Tech (Vision & Intelligent Systems), IIT Kharagpur.
-Supervisor: Prof. Indrajit Chakrabarti, ECE Dept., IIT Kharagpur.
+Subhadeep Mondal, IIT Kharagpur.
+
